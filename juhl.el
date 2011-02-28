@@ -8,6 +8,9 @@
 ;;(setq backup-directory-alist '(("."
 ;;. "/home/mesmento/.emacs.d/backup-files")))
 
+;; YES ==> Y , NO ==> N
+(fset 'yes-or-no-p 'y-or-n-p)
+
 ;; stop creating those #auto-save# files
 (setq auto-save-default nil)
 
@@ -33,7 +36,7 @@
                           ("\\<\\(NOTE\\):" 1 c-nonbreakable-space-face prepend)))
 
 ;; license auto-insert
-(load-library "~/.emacs.d/xlicense.el")
+;;(load-library "~/.emacs.d/xlicense.el")
 
 ;; prevent new frame popup
 (setq ns-pop-up-frames 'nil)
@@ -190,14 +193,24 @@
 
 ;;(window-configuration-to-register '1)
 
-; smart tab
-;(add-to-list 'load-path "~/.emacs.d/smart-tab")
-;(require 'smart-tab)
-;(global-smart-tab-mode 1)
+;; smart tab
+;;(add-to-list 'load-path "~/.emacs.d/smart-tab")
+;;(require 'smart-tab)
+;;(global-smart-tab-mode 1)
+
+(defun copy-line (&optional arg)
+  "Save current line into Kill-Ring without mark the line "
+  (interactive "P")
+  (let ((beg (line-beginning-position))
+        (end (line-end-position)))
+    (copy-region-as-kill beg end))
+  )
+(global-set-key (kbd "C-c l") (quote copy-line))
 
 ;; global key bindings
 ;;(global-set-key "C-Z" nil)
 (global-set-key (kbd "<escape>") 'keyboard-quit)
+(global-set-key "\C-l" 'goto-line)
 (global-set-key '[f1] nil)
 (global-set-key '[f2] nil)
 (global-set-key '[f3] nil)
@@ -219,7 +232,7 @@
 
 (setq font-lock-maximum-decoration t)
 
-;; beep on
+;; visible BELL
 (setq visible-bell nil)
 
 ;; GLSL mode
@@ -237,7 +250,7 @@
   (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60))
   (setq indent-tabs-mode t)
   (setq indent-line-function 'insert-tab)
-  ;;(setq c-default-style "linux")  
+  ;;(setq c-default-style "k&r")  
   (c-set-offset 'substatement-open 0)
   ;;(setq c-basic-offset 4)
   (setq c-indent-level 4)
