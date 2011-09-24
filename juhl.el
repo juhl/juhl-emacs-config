@@ -35,6 +35,57 @@
                           ("\\<\\(BUG\\):" 1 c-nonbreakable-space-face prepend)
                           ("\\<\\(NOTE\\):" 1 c-nonbreakable-space-face prepend)))
 
+;; color theme
+(require 'color-theme)
+;;(color-theme-initialize)
+;;(setq color-theme-is-global t)
+(defun color-theme-juhl ()
+  "Customized color theme by Ju-hyung Lee"
+  (interactive)
+  (color-theme-install
+   '(color-theme-juhl
+     ((foreground-color . "black")
+      (background-color . "white")
+      (background-mode . dark)
+      (cursor-color . "#FF2277"))
+     (default ((t (nil))))
+     (region ((t (:background "#004080" :foreground "#FFFFFF"))))
+     (highlight ((t (:background "#FFDFFF"))))
+     (isearch ((t (:background "#333300" :foreground "#FF3300"))))
+     (font-lock-type-face ((t (:foreground "#64208B"))))
+     (font-lock-constant-face ((t (:foreground "#337780"))))
+     (font-lock-builtin-face ((t (:foreground "#7F7700"))))
+     (font-lock-keyword-face ((t (:foreground "#B000B0"))))
+     (font-lock-comment-face ((t (:foreground "#007000"))))
+     (font-lock-delimeter-face ((t (:foreground "#007000"))))
+     (font-lock-preprocessor-face ((t (:foreground "#723920"))))
+     (font-lock-string-face ((t (:foreground "#C00000"))))
+     (font-lock-function-name-face ((t (:foreground "000000"))))
+     (font-lock-variable-name-face ((t (:foreground "000000"))))
+     (font-lock-doc-face ((t (:foreground "#458B74"))))
+     (font-lock-doc-string-face ((t (:foreground "#EE3300" :background "#323200"))))
+     (font-lock-reference-face ((t (:foreground "#FFFF00"))))
+     (font-lock-warning-face ((t (:bold t :foreground "Red" :weight bold))))
+     (show-paren-match-face ((t (:background "#FFDFFF" :foreground "blue" :weight bold))))
+     (show-paren-mismatch-face ((t (:bold t :background "#FFDFFF" :foreground "red"))))
+     (speedbar-directory-face ((t (:foreground "#FFFF44"))))
+     (speedbar-file-face ((t (:foreground "#DDEEFF"))))
+     (speedbar-highlight-face ((t (:foreground "cyan" :background "#101C33" :underline t))))
+     (speedbar-selected-face ((t (:foreground "white" :background "#003A72"))))
+     (speedbar-separator-face ((t (:background "blue" :foreground "white" :overline "gray"))))
+     (speedbar-tag-face ((t (:foreground "antique white" :weight bold))))
+     (underline ((t (:foreground "yellow" :underline t))))
+     (modeline ((t (:foreground "black" :background "wheat"))))
+     (modeline-mousable ((t (:foreground "dark cyan" :background "wheat"))))
+     (modeline-mousable-minor-mode ((t (:foreground "dark cyan" :background "wheat"))))
+     (minibuffer-prompt ((t (:foreground "#FFFFFF" :background "#000000"))))
+     (eshell-prompt-face ((t (:foreground "#88FFCC"))))
+     (italic ((t (:foreground "dark red" :italic t))))
+     (bold-italic ((t (:foreground "dark red" :bold t :italic t))))
+     (bold ((t (:bold)))))))
+
+(eval-after-load "color-theme" '(color-theme-juhl))
+
 ;; license auto-insert
 ;;(load-library "~/.emacs.d/xlicense.el")
 
@@ -49,23 +100,6 @@
 
 ;; highlight paren pair
 (show-paren-mode t)
-
-;; mac specific settings
-(when macosxp
-  (setq mac-option-key-is-meta nil)
-  (setq mac-command-key-is-meta t)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier nil))
-
-;; windows specific settings
-(when win32p
-  (setq w32-pass-lwindow-to-system nil)
-  (setq w32-pass-rwindow-to-system nil)
-  (setq w32-pass-apps-to-system nil)
-  (setq w32-lwindow-modifier 'super)
-  (setq w32-rwindow-modifier 'super)
-  (setq w32-apps-modifier 'hyper)
-  (setq w32shell-cygwin-bin "C:\\cygwin\\bin"))
 
 ;; set default tab width
 (setq default-tab-width 4)
@@ -103,7 +137,7 @@
 ;;      ac-source-dabbrev)))
 
 ;; font
-(defun my-set-mac-font (name size)
+(defun my-set-font (name size)
   (interactive
    (list (completing-read "font-name: "
                           (mapcar (lambda (p) (list (car p) (car p)))
@@ -116,51 +150,6 @@
                       :width  'normal
                       :height (* 10 size))
   (frame-parameter nil 'font))
-
-(my-set-mac-font "Menlo" 12)
-
-;; color theme
-(color-theme-install
- '(color-theme-juhl
-   ((foreground-color . "black")
-    (background-color . "white")
-    (cursor-color . "#FF2277")
-    (background-mode . dark))
-   (default ((t (nil))))
-   (region ((t (:background "#004080" :foreground "#FFFFFF"))))
-   (highlight ((t (:background "#FFDFFF"))))
-   (isearch ((t (:background "#333300" :foreground "#FF3300"))))
-   (font-lock-type-face ((t (:foreground "#64208B"))))
-   (font-lock-constant-face ((t (:foreground "#337780"))))
-   (font-lock-builtin-face ((t (:foreground "#7F7700"))))
-   (font-lock-keyword-face ((t (:foreground "#B000B0"))))
-   (font-lock-comment-face ((t (:foreground "#007000"))))
-   (font-lock-delimeter-face ((t (:foreground "#007000"))))
-   (font-lock-preprocessor-face ((t (:foreground "#723920"))))
-   (font-lock-string-face ((t (:foreground "#C00000"))))
-   (font-lock-function-name-face ((t (:foreground "000000"))))
-   (font-lock-variable-name-face ((t (:foreground "000000"))))
-   (font-lock-doc-face ((t (:foreground "#458B74"))))
-   (font-lock-doc-string-face ((t (:foreground "#EE3300" :background "#323200"))))
-   (font-lock-reference-face ((t (:foreground "#FFFF00"))))
-   (font-lock-warning-face ((t (:bold t :foreground "Red" :weight bold))))
-   (show-paren-match-face ((t (:background "#FFDFFF" :foreground "blue" :weight bold))))
-   (show-paren-mismatch-face ((t (:bold t :background "#FFDFFF" :foreground "red"))))
-   (speedbar-directory-face ((t (:foreground "#FFFF44"))))
-   (speedbar-file-face ((t (:foreground "#DDEEFF"))))
-   (speedbar-highlight-face ((t (:foreground "cyan" :background "#101C33" :underline t))))
-   (speedbar-selected-face ((t (:foreground "white" :background "#003A72"))))
-   (speedbar-separator-face ((t (:background "blue" :foreground "white" :overline "gray"))))
-   (speedbar-tag-face ((t (:foreground "antique white" :weight bold))))
-   (underline ((t (:foreground "yellow" :underline t))))
-   (modeline ((t (:foreground "black" :background "wheat"))))
-   (modeline-mousable ((t (:foreground "dark cyan" :background "wheat"))))
-   (modeline-mousable-minor-mode ((t (:foreground "dark cyan" :background "wheat"))))
-   (minibuffer-prompt ((t (:foreground "#FFFFFF" :background "#000000"))))
-   (eshell-prompt-face ((t (:foreground "#88FFCC"))))
-   (italic ((t (:foreground "dark red" :italic t))))
-   (bold-italic ((t (:foreground "dark red" :bold t :italic t))))
-   (bold ((t (:bold))))))
 
 ;; set frame position & size
 (set-frame-position (selected-frame) 300 99)
@@ -225,7 +214,7 @@
 
 ;; set hosw-paren-style
 (setq show-paren-style 'parenthesis) ; highlight just parens
-;(setq show-paren-style 'expression) ; highlight entire expression
+                                        ;(setq show-paren-style 'expression) ; highlight entire expression
 
 ;; toolbar off
 (setq tool-bar-mode nil)
@@ -256,7 +245,7 @@
   (setq c-indent-level 4)
   (setq c-argdecl-indent 0)
   (setq c-continued-statement-offset 4)
-  ;(setq c++-tab-always-indent t)
+                                        ;(setq c++-tab-always-indent t)
   ;;(setq c++-auto-hungry-initial-state 'none)
   ;;(setq c++-delete-function 'forward-delete-char)
   ;;(setq c++-empty-arglist-indent 4)
@@ -302,66 +291,74 @@
               (objc-mode)
             (if (file-exists-p dot-c-file)
                 (c-mode)
-                (c++-mode))))
-      )
-  ))
+              (c++-mode))))
+        )
+    ))
 (add-hook 'find-file-hook 'my-choose-header-mode t)
 
-;; xcode build
-(defvar xcode-build-sdks nil)                           
-(defvar xcode-build-sdk-history nil)
+;; mac specific settings
+(when macosxp
+  (setq mac-option-key-is-meta nil)
+  (setq mac-command-key-is-meta t)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier nil)
+  (my-set-font "Menlo" 12)
 
-(dolist (line
-         (split-string
-          (with-temp-buffer
-            (call-process "xcodebuild" nil t nil "-showsdks")
-            (buffer-string))
-          "\n" t)
-         )
-  (let ((comps (split-string line "-sdk " t)))
-    (if (> (length comps) 1)
-        (add-to-list 'xcode-build-sdks (car (last comps)))
-      )
-    )
-  )
+  ;; xcode build
+  (defvar xcode-build-sdks nil)
+  (defvar xcode-build-sdk-history nil)
 
-(defun xcode-build ()
-  (interactive)
-  (let ((command "xcodebuild -activeconfiguration -activetarget"))
-    (setq command
-          (concat
-           command
-           (if xcode-build-sdks
-               (let ((default-sdk (or (car xcode-build-sdk-history) (car xcode-build-sdks))))
-                 (concat
-                  " -sdk "
-                  (completing-read
-                   (format "Compile with sdk (default %s): " default-sdk)
-                   xcode-build-sdks
-                   nil
-                   t
-                   nil
-                   'xcode-build-sdk-history
-                   default-sdk
-                   )
-                  )
-                 )
-             )
-           (let ((dir ".") (files nil))
-             (while
-                 (progn
-                   (setq files (directory-files dir nil "\\.xcodeproj\\'"))
-                   (and (not (string-equal "/" (expand-file-name dir))) (null files))
-                   )
-               (setq dir (concat (file-name-as-directory dir) ".."))
-               )
-             (unless (null files) (concat " -project " (file-name-as-directory dir) (car files)))
-             )
-           )
-          )
-    (compile (read-string "Compile command: " (concat command " ")))
-    )
-  )
+  (dolist (line
+           (split-string
+            (with-temp-buffer
+              (call-process "xcodebuild" nil t nil "-showsdks")
+              (buffer-string))
+            "\n" t))
+    (let ((comps (split-string line "-sdk " t)))
+      (if (> (length comps) 1)
+          (add-to-list 'xcode-build-sdks (car (last comps)))
+        )))
+
+  (defun xcode-build ()
+    (interactive)
+    (let ((command "xcodebuild -activeconfiguration -activetarget"))
+      (setq command
+            (concat
+             command
+             (if xcode-build-sdks
+                 (let ((default-sdk (or (car xcode-build-sdk-history) (car xcode-build-sdks))))
+                   (concat
+                    " -sdk "
+
+                    (completing-read
+                     (format "Compile with sdk (default %s): " default-sdk)
+                     xcode-build-sdks
+                     nil
+                     t
+                     nil
+                     'xcode-build-sdk-history
+                     default-sdk
+                     ))))
+             (let ((dir ".") (files nil))
+               (while
+                   (progn
+                     (setq files (directory-files dir nil "\\.xcodeproj\\'"))
+                     (and (not (string-equal "/" (expand-file-name dir))) (null files)))
+                 (setq dir (concat (file-name-as-directory dir) "..")))
+               (unless (null files) (concat " -project " (file-name-as-directory dir) (car files))))
+             ))
+      (compile (read-string "Compile command: " (concat command " "))))))
+
+;; windows specific settings
+(when win32p
+  (setq w32-pass-lwindow-to-system nil)
+  (setq w32-pass-rwindow-to-system nil)
+  (setq w32-pass-apps-to-system nil)
+  (setq w32-lwindow-modifier 'super)
+  (setq w32-rwindow-modifier 'super)
+  (setq w32-apps-modifier 'hyper)
+  (setq w32shell-cygwin-bin "C:\\cygwin\\bin")
+  (my-set-mac-font "Meslo LG S" 9))
 
 ;; start server
 (server-start)
